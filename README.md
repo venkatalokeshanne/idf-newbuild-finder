@@ -3,7 +3,10 @@
 A mobile-first web app (installable PWA) to browse new-build 3-room apartments in Île-de-France:
 60 m² or more, under 310,000 €. Data was collected on 6 October 2026 from developer websites
 and the SeLoger Neuf developer feed. Social-housing groups are excluded and sales agencies are
-hidden by default (there is a toggle).
+hidden by default (there is a toggle). BRS offers (leasehold land, income-capped) are hidden by default too.
+Every card opens the developer: the exact programme page when known, otherwise the developer's website,
+otherwise a search for it. Portal rows keep a small "SeLoger listing" link as a secondary option.
+Programmes with no size are shown when their price fits.
 
 ## Run it
 

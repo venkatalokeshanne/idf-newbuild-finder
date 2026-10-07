@@ -3,7 +3,7 @@ import { flexRender, getCoreRowModel, getSortedRowModel, useReactTable } from '@
 import { ArrowDown, ArrowUp, ExternalLink, Heart, MapPin } from 'lucide-react'
 import clsx from 'clsx'
 import FitBadge from './FitBadge'
-import { VATS, priceText, sizeText } from '../lib/constants'
+import { VATS, devLink, priceText, sizeText } from '../lib/constants'
 
 export default function ListingTable({ rows, fav, onFav, onMap }) {
   const [sorting, setSorting] = useState([])
@@ -25,7 +25,7 @@ export default function ListingTable({ rows, fav, onFav, onMap }) {
       { id: 'f', header: 'Match', accessorFn: (r) => r.f, cell: ({ row }) => <FitBadge f={row.original.f} /> },
       { id: 'go', header: '', enableSorting: false, cell: ({ row }) => (
         <div className="flex gap-1">
-          {row.original.u && <a href={row.original.u} target="_blank" rel="noopener noreferrer" aria-label="Open page" className="grid h-7 w-7 place-items-center rounded-md text-muted hover:bg-panel2 hover:text-ink"><ExternalLink size={15} /></a>}
+          <a href={devLink(row.original).href} target="_blank" rel="noopener noreferrer" aria-label="Open developer website" title={devLink(row.original).label} className="grid h-7 w-7 place-items-center rounded-md text-muted hover:bg-panel2 hover:text-ink"><ExternalLink size={15} /></a>
           <button onClick={() => onMap(row.original)} aria-label="Show on map" className="grid h-7 w-7 place-items-center rounded-md text-muted hover:bg-panel2 hover:text-ink"><MapPin size={15} /></button>
         </div>) },
     ],

@@ -11,15 +11,15 @@ export const SHORT_DEPTS = {
 export const FIT = {
   confirmed: { label: 'Confirmed apartments', short: 'Confirmed', tip: 'Exact apartments read on the developer site or feed: 3 rooms, 60 m² or more, under €310,000.' },
   likely: { label: 'Likely match', short: 'Likely', tip: 'The developer shows a size range and a "from" price. A 60 m²+ unit probably exists under €310,000 but is not listed.' },
-  unverified: { label: 'Needs a call', short: 'Needs a call', tip: 'Only a "from" price, or no price. Ask an adviser for 3-room sizes.' },
+  unverified: { label: 'Price fits, size unknown', short: 'Size unknown', tip: 'The developer shows only a "from" price (usually for its cheapest apartment type). Open the developer website or ask an adviser for 3-room sizes and prices.' },
   near: { label: 'Near miss', short: 'Near miss', tip: 'Just outside your filters (for example 59 m² or a little over budget).' },
 }
 
-export const VATS = { std: 'Standard 20%', red: 'Reduced VAT', brs: 'BRS' }
+export const VATS = { std: 'Standard 20%', red: 'Reduced VAT' }
 
 export const P_MIN = 100000
 export const P_MAX = 310000
-export const DEFAULT_QUALITY = ['confirmed', 'likely']
+export const DEFAULT_QUALITY = ['confirmed', 'likely', 'unverified']
 
 export const eur = (n) => (n == null ? '' : Math.round(n).toLocaleString('fr-FR').replace(/\u202f/g, ' ') + ' €')
 export const kfmt = (n) => (n == null ? '' : Math.round(n / 1000) + ' k€')
@@ -45,4 +45,12 @@ export function sizeText(r) {
   if (r.s1 && r.s2 && Math.round(r.s1) !== Math.round(r.s2)) return `${Math.round(r.s1)} to ${Math.round(r.s2)} m²`
   const s = r.s1 || r.s2
   return `${(Math.round(s * 10) / 10).toString().replace('.', ',')} m²`
+}
+
+/** Always point to the developer: the exact page when we have it, else the developer site, else a search for it. */
+export function devLink(r) {
+  if (r.s === 'd' && r.u) return { href: r.u, label: 'Open developer page', direct: true }
+  if (r.w) return { href: r.w, label: 'Open developer website', direct: true }
+  const q = encodeURIComponent(`${r.dev} ${r.pr} ${r.c} programme neuf site officiel`)
+  return { href: `https://www.google.com/search?q=${q}`, label: 'Find developer website', direct: false }
 }

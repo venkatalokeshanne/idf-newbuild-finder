@@ -127,6 +127,14 @@ export default function Filters({ f, set, pool, onReset, hideHead }) {
         Hide portal rows that repeat a developer site
       </label>
       <label className="flex cursor-pointer items-start gap-3 pt-3 text-sm text-muted">
+        <input type="checkbox" className="mt-1 h-4 w-4 accent-[rgb(var(--accent))]" checked={f.includeBrs} onChange={(e) => set({ includeBrs: e.target.checked })} />
+        Include BRS offers (you buy the flat but lease the land; income and resale limits)
+      </label>
+      <label className="flex cursor-pointer items-start gap-3 pt-3 text-sm text-muted">
+        <input type="checkbox" className="mt-1 h-4 w-4 accent-[rgb(var(--accent))]" checked={f.includeNoPrice} onChange={(e) => set({ includeNoPrice: e.target.checked })} />
+        Include programmes with no price published
+      </label>
+      <label className="flex cursor-pointer items-start gap-3 pt-3 text-sm text-muted">
         <input type="checkbox" className="mt-1 h-4 w-4 accent-[rgb(var(--accent))]" checked={f.hideAgency} onChange={(e) => set({ hideAgency: e.target.checked })} />
         Hide sales agencies (only show real developers)
       </label>

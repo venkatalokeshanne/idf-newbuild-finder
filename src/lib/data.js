@@ -5,10 +5,11 @@ const yearOf = (s) => (/(20\d\d)/.exec(s || '') || [])[1] || ''
 
 export const DATA = RAW.map((r) => {
   const unit = r.l === 'u'
-  const vat = /BRS/i.test(r.v || '') ? 'brs' : /5\.5|10%/.test(r.v || '') ? 'red' : 'std'
+  const brs = /BRS/i.test(r.v || '')
+  const vat = brs ? 'brs' : /5\.5|10%/.test(r.v || '') ? 'red' : 'std'
   const sizeRef = r.s1 || r.s2 || null
   const ppm = r.p1 && sizeRef ? Math.round(r.p1 / sizeRef) : null
-  return { ...r, unit, vat, ppm, year: yearOf(r.dl), place: `${r.c}|${r.dp}` }
+  return { ...r, unit, vat, brs, ppm, year: yearOf(r.dl), place: `${r.c}|${r.dp}` }
 })
 
 export const ALL_DEVS = Object.entries(

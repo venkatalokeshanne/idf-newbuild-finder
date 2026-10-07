@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import clsx from 'clsx'
 import { Heart, ExternalLink, MapPin } from 'lucide-react'
 import FitBadge from './FitBadge'
-import { VATS, priceText, sizeText } from '../lib/constants'
+import { VATS, devLink, priceText, sizeText } from '../lib/constants'
 
 const bar = { confirmed: 'border-l-ok', likely: 'border-l-warn', unverified: 'border-l-mute', near: 'border-l-bad' }
 
@@ -14,6 +14,7 @@ function Chip({ children, className }) {
 export default function ListingCard({ r, fav, onFav, onMap, active }) {
   const [open, setOpen] = useState(false)
   const pt = priceText(r)
+  const dl = devLink(r)
   return (
     <motion.article
       initial={{ opacity: 0, y: 8 }}
@@ -72,24 +73,27 @@ export default function ListingCard({ r, fav, onFav, onMap, active }) {
       )}
 
       <div className="mt-3 flex flex-wrap gap-2">
-        {r.u && (
-          <a
-            href={r.u}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-accent px-3.5 text-[13.5px] font-semibold text-accent-ink hover:brightness-110"
-          >
-            <ExternalLink size={15} />
-            {r.s === 'p' ? 'Open on portal' : 'Open developer page'}
-          </a>
-        )}
+        <a
+          href={dl.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={clsx('inline-flex h-10 items-center gap-1.5 rounded-xl px-3.5 text-[13.5px] font-semibold lg:h-9', dl.direct ? 'bg-accent text-accent-ink hover:brightness-110' : 'border border-accent text-accent')}
+        >
+          <ExternalLink size={15} />
+          {dl.label}
+        </a>
         <button
           onClick={() => onMap(r)}
-          className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-line bg-panel2 px-3.5 text-[13.5px] font-semibold hover:border-accent"
+          className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-line bg-panel2 px-3.5 text-[13.5px] font-semibold hover:border-accent lg:h-9"
         >
           <MapPin size={15} />
           Show on map
         </button>
+        {r.s === 'p' && r.u && (
+          <a href={r.u} target="_blank" rel="noopener noreferrer" className="inline-flex h-10 items-center px-1 text-[12.5px] text-muted underline hover:text-ink lg:h-9">
+            SeLoger listing
+          </a>
+        )}
       </div>
     </motion.article>
   )

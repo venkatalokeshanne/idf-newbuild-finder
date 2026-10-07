@@ -6,7 +6,7 @@ import FilterSheet from './FilterSheet'
 import ListingCard from './ListingCard'
 import MapView from './MapView'
 import { DATA, SORTS } from '../lib/data'
-import { DEPTS, SHORT_DEPTS, kfmt } from '../lib/constants'
+import { DEFAULT_QUALITY, DEPTS, SHORT_DEPTS, kfmt } from '../lib/constants'
 
 function Pill({ on, onClick, children }) {
   return (
@@ -28,7 +28,7 @@ function Cards({ rows, F, active, shown, setShown, onMap }) {
       {rows.length === 0 && (
         <div className="px-4 py-14 text-center">
           <h3 className="text-lg font-semibold">Nothing matches these filters</h3>
-          <p className="mx-auto my-2 max-w-[32ch] text-muted">Raise the budget, lower the minimum size, or include "Needs a call" in the match filter.</p>
+          <p className="mx-auto my-2 max-w-[32ch] text-muted">Raise the budget, lower the minimum size, or include "Size unknown" in the match filter.</p>
           <button onClick={F.reset} className="mt-2 h-11 rounded-2xl bg-accent px-6 font-semibold text-accent-ink">Reset filters</button>
         </div>
       )}
@@ -61,7 +61,7 @@ export default function MobileApp({ F }) {
         </div>
         <div className="scroll-x pointer-events-auto -mx-3 mt-2 flex gap-2 overflow-x-auto px-3 pb-1">
           <Pill on={F.activeCount > 0 && f.price[1] < 310000} onClick={() => setFilters(true)}>Up to {kfmt(f.price[1])}</Pill>
-          <Pill on={confirmedOnly} onClick={() => set({ quality: confirmedOnly ? ['confirmed', 'likely'] : ['confirmed'] })}>Confirmed only</Pill>
+          <Pill on={confirmedOnly} onClick={() => set({ quality: confirmedOnly ? DEFAULT_QUALITY : ['confirmed'] })}>Confirmed only</Pill>
           {Object.keys(DEPTS).map((d) => <Pill key={d} on={f.depts.includes(d)} onClick={() => toggleDept(d)}>{d} {SHORT_DEPTS[d]}</Pill>)}
         </div>
       </div>

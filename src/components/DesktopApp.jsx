@@ -23,7 +23,7 @@ export default function DesktopApp({ F }) {
       {rows.length === 0 ? (
         <div className="px-5 py-16 text-center">
           <h3 className="text-lg font-semibold">No programmes match these filters</h3>
-          <p className="mx-auto my-2 max-w-[40ch] text-muted">Raise the maximum budget, lower the minimum size, or include "Needs a call" in the match filter.</p>
+          <p className="mx-auto my-2 max-w-[40ch] text-muted">Raise the maximum budget, lower the minimum size, or include "Size unknown" in the match filter.</p>
           <button onClick={F.reset} className="mt-3 h-9 rounded-xl bg-accent px-4 text-sm font-semibold text-accent-ink">Reset filters</button>
         </div>
       ) : view === 'table' ? (
